@@ -74,6 +74,8 @@ expect(Font.encode("HP PP PC TM12 HM07 EXP ID TV CD KO"),
   "HP PP PC TM12 HM07 EXP ID TV CD KO", "protected abbreviations")
 expect(Font.encode("EXP. ALL S.S. AQUA"), "Exp. All S.S. Aqua", "styled phrases")
 expect(Font.encode("FARFETCH'D and HO-OH"), "Farfetch'd and Ho-oh", "apostrophe and hyphen words")
+expect(Font.encode("GOLD HIRO TAYLOR KARL"), "Gold Hiro Taylor Karl",
+  "engine-authored initial player-name presets are formatted")
 expect(Font.encode("ASH RIVAL SPARK BOXMON BOX ONE EGGNAME DAYMON LADYMON"),
   "ASH RIVAL SPARK BOXMON BOX ONE EGGNAME DAYMON LADYMON", "user-entered names preserved")
 expect(Font.encode("ASHLEY uses POTION"), "Ashley uses Potion", "name matching is token bounded")
