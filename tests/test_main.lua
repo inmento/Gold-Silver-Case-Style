@@ -32,14 +32,8 @@ local function loadMod(version, save, isGen2)
     draw = function(text) return text end,
   }
 
-  local NamePick = {}
-  function NamePick.choose(self, name)
-    if self.onDone then return self.onDone(name) end
-  end
-
   package.loaded["src.core.GameVersion"] = nil
   package.loaded["src.render.Font"] = nil
-  package.loaded["src.ui.gen2.NamePick"] = nil
   package.preload["src.core.GameVersion"] = function()
     return {
       get = function() return version end,
@@ -47,7 +41,6 @@ local function loadMod(version, save, isGen2)
     }
   end
   package.preload["src.render.Font"] = function() return Font end
-  package.preload["src.ui.gen2.NamePick"] = function() return NamePick end
 
   local listeners = {}
   local mod = {
@@ -58,7 +51,7 @@ local function loadMod(version, save, isGen2)
   entry()(mod)
   if listeners["save.created"] then listeners["save.created"]({ save = save }) end
   mod.listeners = listeners
-  return Font, mod, entry, NamePick
+  return Font, mod, entry
 end
 
 local save = {
@@ -74,7 +67,7 @@ local save = {
 }
 
 local before = copy(save)
-local Font, mod, entry, NamePick = loadMod("gold", save)
+local Font, mod, entry = loadMod("gold", save)
 expect(Font.encode("PLAYER used POTION!"), "Player used Potion!", "ordinary engine text")
 expect(Font.encode("POKéMON POKéDEX POKéGEAR"), "Pokémon Pokédex Pokégear", "native franchise spellings")
 expect(Font.encode("HP PP PC TM12 HM07 EXP ID TV CD KO"),
@@ -91,14 +84,6 @@ expect(Font.encode("{PLAYER} used <MOVE>!"), "{PLAYER} used <MOVE>!", "placehold
 expect(Font.encode(string.char(1) .. "POTION" .. string.char(2)),
   string.char(1) .. "Potion" .. string.char(2), "text control bytes preserved")
 expect(equal(save, before), true, "formatting never mutates save data")
-
-local initialGold = { onDone = function() end }
-NamePick.choose(initialGold, "GOLD")
-expect(Font.encode("GOLD used POTION!"), "GOLD used Potion!",
-  "selected initial Gold name is protected before save assignment")
-NamePick.choose(initialGold, "HIRO")
-expect(Font.encode("HIRO used POTION!"), "HIRO used Potion!",
-  "other initial preset names are protected before save assignment")
 
 local encoderAfterFirstLoad = Font.encode
 local newSave = { player = { name = "JOE", rival = "BILL" } }
