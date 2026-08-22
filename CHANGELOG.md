@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2 — 2026-08-22
+
+This release packages the corrected engine-authored preset formatting in a higher version so a launcher installation of the earlier 0.1.1 build can update normally. Its functional behavior is the corrected preset behavior documented below.
+
 ## 0.1.1 — 2026-08-22
 
 This corrected release explicitly covers the engine-authored initial player-name presets on the Gold and Silver name-selection menu. They now use the same readable title case as other static UI text: `Gold`, `Hiro`, `Taylor`, and `Karl` in Gold, with the equivalent Silver presets formatted the same way.
