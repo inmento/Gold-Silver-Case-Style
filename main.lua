@@ -10,8 +10,9 @@ return function(mod)
   if GameVersion.generation(playing) ~= 2 then return end
 
   local Font = require("src.render.Font")
+  local NamePick = require("src.ui.gen2.NamePick")
   local marker = "_goldSilverCaseStyle"
-  local state = Font[marker] or { mod = mod, save = nil }
+  local state = Font[marker] or { mod = mod, save = nil, pendingNames = {} }
   state.mod = mod
 
   local KEEP_UPPER = {
@@ -51,10 +52,12 @@ return function(mod)
   end
 
   local function namesFromSave()
-    local save = state.save
-    if type(save) ~= "table" then return {} end
-
     local names, seen = {}, {}
+    for _, name in ipairs(state.pendingNames or {}) do addName(names, seen, name) end
+
+    local save = state.save
+    if type(save) ~= "table" then return names end
+
     local player = type(save.player) == "table" and save.player or {}
     addName(names, seen, player.name)
     addName(names, seen, player.rival)
@@ -147,6 +150,27 @@ return function(mod)
   end
   mod.events:on("save.created", observeSave)
   mod.events:on("save.loaded", observeSave)
+
+  -- NamePick calls its onDone callback before the Gold/Silver new-game flow
+  -- commits the selected name into save.player. The default GOLD therefore
+  -- reached Font.encode once without a save-backed name to protect. Track the
+  -- chosen name at that handoff; it is presentation-only state and never
+  -- writes to the save.
+  if not NamePick[marker] then
+    local nativeChoose = NamePick.choose
+    NamePick.choose = function(self, name, ...)
+      if type(name) == "string" and name ~= "" then
+        state.pendingNames = state.pendingNames or {}
+        local seen = false
+        for _, existing in ipairs(state.pendingNames) do
+          if existing == name then seen = true break end
+        end
+        if not seen then state.pendingNames[#state.pendingNames + 1] = name end
+      end
+      return nativeChoose(self, name, ...)
+    end
+    NamePick[marker] = true
+  end
 
   -- Font.draw and Font.width both enter through Font.encode in the current
   -- renderer. Wrapping that one presentation boundary keeps measurement, text

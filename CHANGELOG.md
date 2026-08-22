@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.1 — 2026-08-21
+
+This hotfix protects a player name selected during Gold/Silver’s initial naming menu before the new-game flow commits that choice to the save. In particular, choosing the default **GOLD** now remains `GOLD` everywhere it is shown instead of being reformatted as `Gold` during the short handoff window.
+
+The fix observes the existing Gold/Silver name-picker choice only as temporary presentation state. It does not write to save data and leaves all prior custom-name, nickname, placeholder, abbreviation, and engine-text behavior unchanged.
+
 ## 0.1.0 — 2026-08-21
 
 This initial public release adds **Gold/Silver Case Style** for the Gold and Silver builds of Gen1Recomp. It applies a presentation-only sentence-style formatter to engine-authored all-caps text at the shared Generation II font encoding boundary.

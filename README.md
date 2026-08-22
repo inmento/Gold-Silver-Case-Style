@@ -26,7 +26,7 @@ Common technical labels deliberately stay uppercase, including `HP`, `PP`, `PC`,
 
 ## Name protection
 
-The default behavior respects user-created content. The formatter tracks the active save through the engine’s save-created and save-loaded lifecycle events, then leaves these values exactly as entered:
+The default behavior respects user-created content. The formatter tracks the active save through the engine’s save-created and save-loaded lifecycle events. It also protects the selected initial Gold/Silver naming-menu choice during the brief interval before the new-game flow writes it to the save, so the default `GOLD` remains exactly `GOLD`. It then leaves these values exactly as entered:
 
 - Player and rival names.
 - Party Pokémon nicknames.
@@ -55,7 +55,7 @@ Run the regression suite with:
 lua tests/test_main.lua .
 ```
 
-The suite validates the Generation II gate, native casing conversions, technical abbreviations, custom-name preservation, placeholder and control-byte handling, no-save-mutation behavior, and safe hot reload.
+The suite validates the Generation II gate, native casing conversions, technical abbreviations, save-backed and initial name-picker preservation, placeholder and control-byte handling, no-save-mutation behavior, and safe hot reload.
 
 ## License
 
