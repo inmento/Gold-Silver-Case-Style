@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.0 — 2026-08-24
+
+This release renames the player-facing mod title to **Gen 2 Case Style** and adds native Crystal coverage for Gen1Recomp `0.2.24` and later. The package remains a presentation-only formatter: it uses the existing Generation II manifest scope and `GameVersion.generation(playing) == 2` guard, so Gold, Silver, and Crystal share one safe renderer path while Generation I remains untouched.
+
+The regression suite now explicitly loads the Crystal runtime and confirms that the formatter installs there. The stable internal hot-reload marker and all save-backed name-protection behavior are preserved.
+
 ## 0.1.2 — 2026-08-22
 
 This release packages the corrected engine-authored preset formatting in a higher version so a launcher installation of the earlier 0.1.1 build can update normally. Its functional behavior is the corrected preset behavior documented below.

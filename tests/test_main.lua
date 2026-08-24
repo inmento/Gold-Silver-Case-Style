@@ -99,6 +99,12 @@ replacementListeners["save.loaded"]({ save = newSave })
 expect(Font.encode, encoderAfterFirstLoad, "hot reload does not stack wrappers")
 expect(Font.encode("ASH JOE POTION"), "Ash JOE Potion", "hot reload updates active save context")
 
+local CrystalFont = loadMod("crystal", save)
+expect(CrystalFont.encode("PLAYER used POTION!"), "Player used Potion!",
+  "Crystal receives the Gen 2 text formatter")
+expect(CrystalFont._goldSilverCaseStyle ~= nil, true,
+  "Crystal installs the existing stable renderer marker")
+
 local Gen1Font = loadMod("red", save, false)
 expect(Gen1Font.encode("PLAYER used POTION!"), "PLAYER used POTION!", "Generation I is not modified")
 expect(Gen1Font._goldSilverCaseStyle, nil, "Generation I installs no renderer wrapper")

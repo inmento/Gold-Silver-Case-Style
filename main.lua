@@ -1,4 +1,4 @@
--- Gold/Silver Case Style
+-- Gen 2 Case Style
 --
 -- Presentation-only formatting for Generation II's engine-authored ALL-CAPS
 -- text.  This module intentionally keeps player-created names byte-for-byte
@@ -119,7 +119,7 @@ return function(mod)
     for raw, styled in pairs(PHRASE_STYLE) do
       masked = masked:gsub(escapePattern(raw), styled)
     end
-    -- Gold/Silver's native spelling already carries a lowercase accented e;
+    -- Gen 2's native spelling already carries a lowercase accented e;
     -- normalize only the surrounding caps before generic word handling.
     masked = masked:gsub("POKéMON", "Pokémon")
     masked = masked:gsub("POKéDEX", "Pokédex")
@@ -161,6 +161,6 @@ return function(mod)
   end
 
   if mod.log and type(mod.log.info) == "function" then
-    mod.log:info("Gold/Silver Case Style active for %s.", playing)
+    mod.log:info("Gen 2 Case Style active for %s.", playing)
   end
 end
