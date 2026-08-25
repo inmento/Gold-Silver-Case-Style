@@ -1,15 +1,19 @@
 {
   "id": "gold_silver_case_style",
   "name": "Gen 2 Case Style",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "entry": "main.lua",
   "api": 2,
-  "game_version": ">=0.2.24",
+  "game_version": ">=0.2.18",
   "category": "QUALITY_OF_LIFE",
   "profile": "content",
-  "games": ["gen2"],
+  "games": [
+    "gen2"
+  ],
   "affects_link": false,
-  "permissions": ["engine_internals"],
+  "permissions": [
+    "engine_internals"
+  ],
   "github": "inmento/Gold-Silver-Case-Style",
   "description": "Presentation-only sentence-style casing for engine-authored Gold, Silver, and Crystal text, while preserving player-entered names."
 }
